@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
-import useLineChart from '../dist/use-line-chart.js'
+// import useLineChart from '../dist/use-line-chart.js'
+import useLineChart from '../src/index'
 
 const Line: any = (props: any) => {
   const { dataSource } = props
