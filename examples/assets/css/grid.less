@@ -1,0 +1,97 @@
+.grid-container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.space-between-row {
+  &:extend(.row);
+  justify-content: space-between;
+}
+
+.generate-columns(@screen-size, @columns, @gutter-width) {
+  .for(@i: 1) when (@i <= 12) {
+    & when (@i > @columns) {
+      .col-@{i} {
+        flex: none;
+        flex-basis: 100%;
+        width: 100%;
+        padding-left: @gutter-width / 2 * 1px;
+        padding-right: @gutter-width / 2 * 1px;
+      }
+      .col-offset-@{i} {
+        margin-left: 100%;
+      }
+    }
+    & when not (@i > @columns) {
+      .col-@{i}, .col-@{screen-size}-@{i} {
+        flex: none;
+        flex-basis: 100% / @columns * @i;
+        width: 100% / @columns * @i;
+        padding-left: @gutter-width / 2 * 1px;
+        padding-right: @gutter-width / 2 * 1px;
+      }
+      .col-offset-@{i}, .col-@{screen-size}-offset-@{i} {
+        margin-left: 100% / @columns * @i;
+      }
+    }
+    .for((@i + 1));
+  }
+  .for();
+}
+
+.generate-columns(xs, 4, 16);
+
+@media (min-width: 600px) {
+  .generate-columns(sm, 8, 16);
+}
+
+@media (min-width: 840px) {
+  .grid-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .row {
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+  .generate-columns(md, 12, 24);
+}
+
+@media (min-width: 1248px) {
+  .grid-container {
+    width: 1248px;
+    max-width: 1248px;
+    margin: 0 auto;
+  }
+}
+
+@xs: 360px;
+@sm: 600px;
+@md: 840px;
+@lg: 1024px;
+
+.mq(@name, @large: null, @medium: null, @small: null, @xsmall: null) {
+  & when (@xsmall) {
+    @{name}: @xsmall
+  }
+  & when (@small) {
+    @media (min-width: @sm) {
+      @{name}: @small
+    }
+  }
+  & when (@medium) {
+    @media (min-width: @md) {
+      @{name}: @medium
+    }
+  }
+  & when (@large) {
+    @media (min-width: @lg) {
+      @{name}: @large
+    }
+  }
+}
