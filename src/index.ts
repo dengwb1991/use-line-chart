@@ -85,6 +85,8 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     const mouseY = offsetY - offsetTop
     const mouseX = offsetX - offsetLeft
     const { dataSourceAxis, padding, contentHeight, contentWidth } = chart.current
+    if (!dataSourceAxis || !dataSourceAxis.length) return
+
     if (mouseY < padding[0] || mouseY > (contentHeight + +padding[0]) ||
       mouseX < padding[3] || mouseX > (contentWidth + +padding[3])) {
       return void 0
@@ -111,8 +113,9 @@ const useLineChart = (canvasRef: RefObject<any>) => {
    * 初始化获取节点
    * @param index
    */
-  const initPoint = (index?: number): object => {
+  const initPoint = (index?: number): object | undefined => {
     const { dataSourceAxis, dataSource } = chart.current
+    if (!dataSource || !dataSource.length) return
     if (index === void 0 || index > dataSource.length - 1) {
       index = dataSource.length - 1
     }
@@ -177,7 +180,6 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     padding = chart.current.padding,
     style,
   }: InitOptions): Chart => {
-    if (!dataSource) return chartSelf
     const canvas = canvasRef.current
     const { ctx } = chart.current
     const ratio = getPixelRatio(ctx)

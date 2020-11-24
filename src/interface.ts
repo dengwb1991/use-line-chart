@@ -120,7 +120,7 @@ export interface Chart {
   }) => void,
   clearCanvas: () => void,
   onMouseMove: (event: MouseEvent) => object | undefined,
-  initPoint: (index?: number) => object,
+  initPoint: (index?: number) => object | undefined,
 }
 
 export interface InitOptions {

@@ -87,7 +87,7 @@ export const getExtremeValue = (data: any[], dataIndex: DataIndex, _x: Function,
   })
   return {
     dataSource,
-    dataSourceAxis: (dataSourceAxis as Point[]).sort((prev, curr) => +prev.x - +curr.x),
+    dataSourceAxis: dataSourceAxis.length ? (dataSourceAxis as Point[]).sort((prev, curr) => +prev.x - +curr.x) : [],
     min: [Math.min(...xArray), Math.min(...yArray)],
     max: [Math.max(...xArray), Math.max(...yArray)],
     diff: [Math.max(...xArray) - Math.min(...xArray), Math.max(...yArray) - Math.min(...yArray)]
@@ -98,6 +98,7 @@ export const getExtremeValue = (data: any[], dataIndex: DataIndex, _x: Function,
  * @param dataSourceAxis
  */
 export const getCurrPointLocation = (dataSourceAxis: Point[]) => {
+  if (!dataSourceAxis.length) return []
   let arr = []
   const len = dataSourceAxis.length
   const total = dataSourceAxis[len - 1].x
