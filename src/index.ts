@@ -82,10 +82,12 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     let { offsetX, offsetY } = event
     offsetX = offsetX ? offsetX : event.clientX
     offsetY = offsetY ? offsetY : event.clientY
-    const mouseY = offsetY - offsetTop
-    const mouseX = offsetX - offsetLeft
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
+    const mouseY = offsetY - offsetTop + scrollTop
+    const mouseX = offsetX - offsetLeft + scrollLeft
     const { dataSourceAxis, padding, contentHeight, contentWidth } = chart.current
-    if (!dataSourceAxis || !dataSourceAxis.length) return
+    if (!dataSourceAxis || !dataSourceAxis.length) return void 0
 
     if (mouseY < padding[0] || mouseY > (contentHeight + +padding[0]) ||
       mouseX < padding[3] || mouseX > (contentWidth + +padding[3])) {
