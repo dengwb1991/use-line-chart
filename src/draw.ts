@@ -58,9 +58,9 @@ const _getPonits = (dataSourceAxis: any[], t: number, contentHeight: number) => 
 }
 /**
  * 创建画
- * @param chart 
- * @param _x 
- * @param _y 
+ * @param chart
+ * @param _x
+ * @param _y
  */
 const createDraw = (chart: React.MutableRefObject<any>, _x: Function, _y: Function) => {
   const {
@@ -77,7 +77,7 @@ const createDraw = (chart: React.MutableRefObject<any>, _x: Function, _y: Functi
     fill = {},
     xAxis: styleX = {},
     yAxis: styleY = {},
-    auxiliaryLine = {}
+    // auxiliaryLine = {}
   } = style
   /**
    * 初始化 X 轴线
@@ -89,13 +89,14 @@ const createDraw = (chart: React.MutableRefObject<any>, _x: Function, _y: Functi
     for (let i = 0, len = values.length; i < len; i++) {
       const val = values[i]
       const x = _x(val.value)
-      if (i === 0) {
-        ctx.textAlign = 'left'
-      } else if (i === values.length - 1) {
-        ctx.textAlign = 'right'
-      } else {
-        ctx.textAlign = 'center'
-      }
+      // if (i === 0) {
+      //   ctx.textAlign = 'left'
+      // } else if (i === values.length - 1) {
+      //   ctx.textAlign = 'right'
+      // } else {
+      //   ctx.textAlign = 'center'
+      // }
+      ctx.textAlign = 'center'
       ctx.fillText(val.label, x, contentHeight + padding[2] / 2)
       ctx.moveTo(x, contentHeight)
       ctx.lineTo(x, contentHeight + 4)
@@ -146,7 +147,6 @@ const createDraw = (chart: React.MutableRefObject<any>, _x: Function, _y: Functi
       const next = newDataSource[i === 0 ? 0 : i - 1].next
       const prev = curr.previous
       ctx.bezierCurveTo(next.x, next.y, prev.x, prev.y, curr.x, curr.y)
-      
       lastX = curr.x
     }
     ctx.stroke()

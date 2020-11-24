@@ -33,7 +33,7 @@ export const CANVAS_AXIS_FONT = '14px SohoGothicPro'
 export const CANVAS_AXIS_TEXT_BASE_LINE = 'middle'
 export const CANVAS_AXIS_FILL_STYLE = 'black'
 export const CANVAS_AXIS_LINE_WIDTH = 1
-export const CANVAS_AXIS_STROKE_STYLE = 'gray'
+export const CANVAS_AXIS_STROKE_STYLE = '#ccc'
 /**
  * 辅助线
  */

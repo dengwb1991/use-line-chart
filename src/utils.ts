@@ -1,7 +1,6 @@
 import {
   Point,
   DataIndex,
-  AxisFunction,
   LineType,
   LabelValue
 } from './interface'
@@ -119,14 +118,14 @@ export const getCurrPointLocation = (dataSourceAxis: Point[]) => {
   return arr
 }
 /**
- * 判断参数为函数时，执行并返回数组、数组最小值、最大值、最大差值
+ * 参数支持传入number[]类型，最终处理为 LabelValue<string, number>[]类型
+ * 执行并返回数组、数组最小值、最大值、最大差值
  * @param data
  * @return { values, min, max, diff }
  */
-export const getAxisDataSource = (data: LabelValue<string, number>[] | AxisFunction) => {
-  const type = Object.prototype.toString.call(data)
-  if (type === '[object Function]') {
-    data = (data as AxisFunction)()
+export const getAxisDataSource = (data: LabelValue<string, number>[] | number[]) => {
+  if (Object.prototype.toString.call(data[0]) === '[object Number]') {
+    data = (data as any[]).reduce((prev, curr) => [...prev, { label: curr, value: curr }], [])
   }
   const min = Math.min(...(data as any[]).reduce((prev, curr) => [...prev, curr.value], []))
   const max = Math.max(...(data as any[]).reduce((prev, curr) => [...prev, curr.value], []))

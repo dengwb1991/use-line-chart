@@ -49,8 +49,6 @@ export interface ChartRef {
   step: boolean | boolean[]
 }
 
-export type AxisFunction = () => LabelValue<string, number>[]
-
 export type LineType = 'polyline' | 'curve'
 /**
  * 曲线选项

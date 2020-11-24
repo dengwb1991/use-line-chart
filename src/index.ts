@@ -58,7 +58,7 @@ const useLineChart = (canvasRef: RefObject<any>) => {
    * 辅助线
    * @param param
    */
-  const _drawAuxiliaryLine = ({ point } : { point: [number, number] }) => {
+  const _drawAuxiliaryLine = ({ point }: { point: [number, number] }) => {
     const { ctx, contentHeight } = chart.current
     ctx.beginPath()
     ctx.setLineDash([4, 4])
