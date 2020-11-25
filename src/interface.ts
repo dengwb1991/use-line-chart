@@ -107,7 +107,7 @@ export interface Chart {
     },
     padding?: string | number[],
     style?: object
-  }) => Chart,
+  }) => void,
   draw: (options?: {
     dataSource?: any[],
     dataIndex?: DataIndex,

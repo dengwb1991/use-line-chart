@@ -1,3 +1,6 @@
+declare module 'react-markdown' {
+  export interface ReactMarkdown {}
+}
 interface DataIndex {
   x: string,
   y: string

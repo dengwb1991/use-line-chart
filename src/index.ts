@@ -74,14 +74,84 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     ctx.fill()
   }
   /**
+   * 清空画布
+   */
+  const clearCanvas = () => {
+    const {
+      ctx,
+      padding,
+      width,
+      height
+    }: {
+      ctx: any;
+      padding: any;
+      width: number;
+      height: number;
+    } = chart.current
+    ctx && ctx.clearRect(-padding[1] - padding[3] - 10, -padding[0] - +padding[2] - 10, width + padding[1] + padding[3], height + padding[0] + padding[2])
+  }
+  /**
+   * 画 数据更新
+   * @param options
+   */
+  const draw = (options: DrawOptions = {
+    dataSource: chart.current.dataSource,
+    dataIndex: chart.current.dataIndex,
+    xAxis: undefined,
+    yAxis: undefined,
+  }) => {
+    let {
+      dataSource = chart.current.dataSource,
+      dataIndex = chart.current.dataIndex,
+      xAxis,
+      yAxis,
+    } = options
+    const { step }: { step: any } = chart.current
+    clearCanvas()
+    if (xAxis || yAxis) {
+      xAxis = xAxis || chart.current.xAxis
+      yAxis = yAxis || chart.current.yAxis
+      const xAxisValues = getAxisDataSource(xAxis.values)
+      const yAxisValues = getAxisDataSource(yAxis.values)
+      Object.assign(chart.current, {
+        initialized: true,
+        xAxis: { ...yAxis, ...xAxisValues },
+        yAxis: { ...yAxis, ...yAxisValues },
+      })
+    }
+    const extreme = getExtremeValue(dataSource, dataIndex, _x, _y)
+    setPointInterval(getCurrPointLocation(extreme.dataSourceAxis) as any)
+    Object.assign(chart.current, extreme)
+    const { drawXAxis, drawYAxis, drawLine } = createDraw(chart, _x, _y)
+    step[0] && drawXAxis()
+    step[1] && drawYAxis()
+    step[2] && drawLine()
+  }
+  /**
+   * 初始化获取节点
+   * @param index
+   */
+  const initPoint = (index?: number): object | undefined => {
+    const { dataSourceAxis, dataSource } = chart.current
+    if (!dataSource || !dataSource.length) return void 0
+
+    if (index === void 0 || index > dataSource.length - 1) {
+      index = dataSource.length - 1
+    }
+    const point = dataSourceAxis[index]
+    draw()
+    _drawAuxiliaryLine({ point: [point.x, point.y] })
+    return dataSource[index]
+  }
+  /**
    * 鼠标经过展示节点
    * @param event
    */
   const onMouseMove = (event: any): object | undefined => {
     let { offsetTop, offsetLeft } = event.target
     let { offsetX, offsetY } = event
-    offsetX = offsetX ? offsetX : event.clientX
-    offsetY = offsetY ? offsetY : event.clientY
+    offsetX = offsetX || event.clientX
+    offsetY = offsetY || event.clientY
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
     const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft
     const mouseY = offsetY - offsetTop + scrollTop
@@ -110,66 +180,6 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     // const index = Math.min(len, Math.max(0, len * scale))
     return initPoint(index)
   }
-
-  /**
-   * 初始化获取节点
-   * @param index
-   */
-  const initPoint = (index?: number): object | undefined => {
-    const { dataSourceAxis, dataSource } = chart.current
-    if (!dataSource || !dataSource.length) return
-    if (index === void 0 || index > dataSource.length - 1) {
-      index = dataSource.length - 1
-    }
-    const point = dataSourceAxis[index]
-    draw()
-    _drawAuxiliaryLine({ point: [point.x, point.y] })
-    return dataSource[index]
-  }
-  /**
-   * 清空画布
-   */
-  const clearCanvas = () => {
-    const { ctx, padding, width, height } : { ctx: any, padding: any, width: number, height: number} = chart.current
-    ctx && ctx.clearRect(-padding[1] - padding[3] - 10, -padding[0] - +padding[2] - 10, width + padding[1] + padding[3], height + padding[0] + padding[2])
-  }
-  /**
-   * 画 数据更新
-   * @param options 
-   */
-  const draw = (options: DrawOptions = {
-    dataSource: chart.current.dataSource,
-    dataIndex: chart.current.dataIndex,
-    xAxis: undefined,
-    yAxis: undefined,
-  }) => {
-    let {
-      dataSource = chart.current.dataSource,
-      dataIndex = chart.current.dataIndex,
-      xAxis,
-      yAxis,
-    } = options
-    const { step } : { step: any } = chart.current
-    clearCanvas()
-    if (xAxis || yAxis) {
-      xAxis = xAxis ? xAxis : chart.current.xAxis
-      yAxis = yAxis ? yAxis : chart.current.yAxis
-      const xAxisValues = getAxisDataSource(xAxis.values)
-      const yAxisValues = getAxisDataSource(yAxis.values)
-      Object.assign(chart.current, {
-        initialized: true,
-        xAxis: { ...yAxis, ...xAxisValues },
-        yAxis: { ...yAxis, ...yAxisValues },
-      })
-    }
-    const extreme = getExtremeValue(dataSource, dataIndex, _x, _y)
-    setPointInterval(getCurrPointLocation(extreme.dataSourceAxis) as any)
-    Object.assign(chart.current, extreme)
-    const { drawXAxis, drawYAxis, drawLine } = createDraw(chart, _x, _y)
-    step[0] && drawXAxis()
-    step[1] && drawYAxis()
-    step[2] && drawLine()
-  }
   /**
    * 初始化方法
    */
@@ -181,7 +191,7 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     yAxis,
     padding = chart.current.padding,
     style,
-  }: InitOptions): Chart => {
+  }: InitOptions) => {
     const canvas = canvasRef.current
     const { ctx } = chart.current
     const ratio = getPixelRatio(ctx)
@@ -222,7 +232,6 @@ const useLineChart = (canvasRef: RefObject<any>) => {
         yAxis: chart.current.yAxis,
       } as DrawOptions)
     }
-    return chartSelf
   }
   useEffect(() => {
     chart.current.ctx = canvasRef.current.getContext('2d')

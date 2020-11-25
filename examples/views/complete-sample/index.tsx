@@ -58,11 +58,12 @@ const Index = () => {
             { point && <span>Value: x={value.x} y={value.y}</span> }
           </div>
           <div style={{ height: '240px' }}>
-            <Main dataSource={dataSource}
-                  setValue={setValue}
-                  lineType={lineType}
-                  fill={fill}
-                  point={point}/>
+            <Main
+              dataSource={dataSource}
+              setValue={setValue}
+              lineType={lineType}
+              fill={fill}
+              point={point}/>
           </div>
         </div>
       }

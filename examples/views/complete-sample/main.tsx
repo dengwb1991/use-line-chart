@@ -30,30 +30,24 @@ const CompleteSample = (props: any) => {
     { label: '100%', value: 1 },
   ]
   const initChart = () => {
-    // if (lineChart.chart.initialized) {
-    //   lineChart.draw({
-    //     dataSource
-    //   })
-    // } else {
-      lineChart.init({
-        dataSource,
-        yAxis: { values: yValues },
-        xAxis: { values: xValues },
-        padding: '20 20 30 40',
-        style: {
-          line: {
-            lineType  // polyline | curve
-          },
-          fill: {
-            visible: fill
-          }
+    lineChart.init({
+      dataSource,
+      yAxis: { values: yValues },
+      xAxis: { values: xValues },
+      padding: '20 20 30 40',
+      style: {
+        line: {
+          lineType // polyline | curve
+        },
+        fill: {
+          visible: fill
         }
-      })
-    // }
+      }
+    })
     if (!point) return
 
     const data = lineChart.initPoint()
-    setValue(data)
+    data && setValue(data)
   }
 
   const onMouseMove = (event: any) => {
@@ -69,9 +63,8 @@ const CompleteSample = (props: any) => {
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: '100%', height: '100%'}}
-      onMouseMove={onMouseMove}
-      >
+      style={{ width: '100%', height: '100%' }}
+      onMouseMove={onMouseMove}>
     </canvas>
   )
 }

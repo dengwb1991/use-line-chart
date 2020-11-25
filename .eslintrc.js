@@ -31,6 +31,7 @@ module.exports = {
     'operator-linebreak': 0,
     'prefer-const': 0,
     'comma-dangle': 0,
+    'no-void': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/explicit-function-return-type': "off"
   }                           

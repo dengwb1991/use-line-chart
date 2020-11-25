@@ -61,7 +61,7 @@ export const getSplineCurve = (firstPoint: Point, middlePoint: Point, afterPoint
  * @param dataIndex 数据源key
  * @param _x x轴坐标转化方法
  * @param _y y轴坐标转化方法
- * @return 
+ * @return
  */
 export const getExtremeValue = (data: any[], dataIndex: DataIndex, _x: Function, _y: Function) => {
   const xArray: any[] = []
@@ -139,7 +139,7 @@ export const getAxisDataSource = (data: LabelValue<string, number>[] | number[])
 }
 /**
  * 获取曲线系数
- * @param type 
+ * @param type
  */
 export const getLineCoefficient = (type: LineType) => {
   let cft = 0
