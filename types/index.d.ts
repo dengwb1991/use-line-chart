@@ -1,6 +1,3 @@
-declare module 'react-markdown' {
-  export interface ReactMarkdown {}
-}
 interface DataIndex {
   x: string,
   y: string
@@ -10,8 +7,6 @@ interface AxisValues {
   label: string,
   value: number
 }
-
-declare function axisFn (): AxisValues[]
 
 interface Chart {
   chart: {
@@ -23,10 +18,10 @@ interface Chart {
     dataIndex?: DataIndex
     isDraw?: boolean | boolean[]
     xAxis: {
-      values: AxisValues[] | typeof axisFn
+      values: AxisValues[] | number[]
     },
     yAxis: {
-      values: AxisValues[] | typeof axisFn
+      values: AxisValues[] | number[]
     },
     padding?: string | number[],
     style?: {
@@ -58,20 +53,20 @@ interface Chart {
         fillStyle?: string
       }
     }
-  }) => Chart,
+  }) => void,
   draw: (options?: {
     dataSource?: any[],
     dataIndex?: DataIndex,
     xAxis?: {
-      values: AxisValues[] | typeof axisFn
+      values: AxisValues[] | number[]
     },
     yAxis?: {
-      values: AxisValues[] | typeof axisFn
+      values: AxisValues[] | number[]
     }
   }) => void,
   clearCanvas: () => void,
   onMouseMove: (event: MouseEvent) => object | undefined,
-  initPoint: (index?: number) => object,
+  initPoint: (index?: number) => object | undefined,
 }
 
 declare function useLineChart (ref: React.RefObject<HTMLCanvasElement>): Chart
