@@ -86,17 +86,21 @@ const createDraw = (chart: React.MutableRefObject<any>, _x: Function, _y: Functi
     const { values } = xAxis
     ctx.beginPath()
     _setCxtAxis(ctx, options, styleX)
+    let textAlign = styleX.textAlign || 'center'
     for (let i = 0, len = values.length; i < len; i++) {
       const val = values[i]
       const x = _x(val.value)
-      // if (i === 0) {
-      //   ctx.textAlign = 'left'
-      // } else if (i === values.length - 1) {
-      //   ctx.textAlign = 'right'
-      // } else {
-      //   ctx.textAlign = 'center'
-      // }
-      ctx.textAlign = 'center'
+      if (textAlign === 'middle') {
+        if (i === 0) {
+          ctx.textAlign = 'left'
+        } else if (i === values.length - 1) {
+          ctx.textAlign = 'right'
+        } else {
+          ctx.textAlign = 'center'
+        }
+      } else {
+        ctx.textAlign = textAlign
+      }
       ctx.fillText(val.label, x, contentHeight + padding[2] / 2)
       ctx.moveTo(x, contentHeight)
       ctx.lineTo(x, contentHeight + 4)
