@@ -17,7 +17,7 @@ export default {
   input: 'src/index.ts',
   output: {
     banner,
-    file: 'dist/use-line-chart.min.js',
+    file: 'lib/use-line-chart.min.js',
     format: 'umd',
     name: 'useLineChart',
     sourcemap: false,

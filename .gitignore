@@ -5,6 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 deploy/
 dist/
+lib/
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log

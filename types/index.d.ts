@@ -67,6 +67,8 @@ interface Chart {
   clearCanvas: () => void,
   onMouseMove: (event: MouseEvent) => object | undefined,
   initPoint: (index?: number) => object | undefined,
+  _x: (data: number) => number,
+  _y: (data: number) => number,
 }
 
 declare function useLineChart (ref: React.RefObject<HTMLCanvasElement>): Chart

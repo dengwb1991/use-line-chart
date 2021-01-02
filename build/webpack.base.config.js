@@ -7,19 +7,24 @@ const resolve = (dir) => {
 }
 
 const createLintingRule = () => ({
-  test: /\.(ts|tsx)$/,
-  use: [{
-    loader: 'ts-loader',
-    options: {
-      transpileOnly: true
+  test: /\.(ts|tsx|js)$/,
+  use: [
+    {
+      loader: 'babel-loader',
+    },
+    {
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true
+      }
+    }, {
+      loader: 'eslint-loader',
+      options: {
+        formatter: require('eslint-friendly-formatter'),
+        emitWarning: !config.dev.showEslintErrorsInOverlay
+      }
     }
-  }, {
-    loader: 'eslint-loader',
-    options: {
-      formatter: require('eslint-friendly-formatter'),
-      emitWarning: !config.dev.showEslintErrorsInOverlay
-    }
-  }],
+  ],
   include: [resolve('src'), resolve('examples')],
   exclude: /node_modules/
 })

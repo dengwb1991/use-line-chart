@@ -243,6 +243,8 @@ const useLineChart = (canvasRef: RefObject<any>) => {
     clearCanvas,
     onMouseMove,
     initPoint,
+    _x,
+    _y,
   }
   return chartSelf
 }

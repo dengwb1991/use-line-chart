@@ -121,6 +121,8 @@ export interface Chart {
   clearCanvas: () => void,
   onMouseMove: (event: MouseEvent) => object | undefined,
   initPoint: (index?: number) => object | undefined,
+  _x: (data: number) => number,
+  _y: (data: number) => number,
 }
 
 export interface InitOptions {

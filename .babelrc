@@ -1,19 +1,10 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ]
+    "@babel/preset-env",
+    "@babel/preset-typescript"
   ],
   "plugins": [
-    "transform-object-rest-spread",
-    "transform-object-assign"
-  ],
-  "env": {
-    "test": {
-      "plugins": [ "istanbul" ]
-    }
-  }
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread"
+  ]
 }
