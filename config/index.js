@@ -15,6 +15,6 @@ module.exports = {
     cssSourceMap: false
   },
   build: {
-    assetsPublicPath: '/'
+    assetsPublicPath: './'
   }
 }
